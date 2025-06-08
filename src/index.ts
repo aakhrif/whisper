@@ -1,20 +1,13 @@
 import { OpenAI } from "openai";
 import dotenv from "dotenv";
+import { ListModels, BasicChat } from "./modules/ListModels";
 
 dotenv.config();
 
+const QUOTA = "EXCEEDED";
 const openai = new OpenAI();
 
-async function basicExample() {
-  try {
-    const response = await openai.models.list();
-    console.log("API Request Successful!");
-    response.data.forEach((model) => {
-      console.log(`- ${model.id}`);
-    });
-  } catch (error) {
-    console.error(`API Request Failed: ${error}`);
-  }
+if (QUOTA !== "EXCEEDED") {
+  ListModels(openai);
+  BasicChat(openai);
 }
-
-basicExample();
